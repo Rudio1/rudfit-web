@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Camera,
-  Flame,
-  TrendingUp,
   UtensilsCrossed,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -27,7 +25,6 @@ import { buttonVariants } from "@/components/ui/button";
 import { ActionBar } from "@/components/ui/action-bar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
-import { StatCard } from "@/components/ui/stat-card";
 
 function formatTodayLabel(date: Date): string {
   return date.toLocaleDateString("pt-BR", {
@@ -103,43 +100,6 @@ export function HomeDashboard() {
           <Camera className="size-4" />
           Adicionar refeição
         </Link>
-      }
-      stats={
-        <>
-          <StatCard
-            label="Calorias"
-            value={`${Math.round(summary.totalCalories)} kcal`}
-            hint={
-              goalReached
-                ? "Meta atingida"
-                : `${Math.round(caloriesRemaining)} kcal restantes`
-            }
-            icon={Flame}
-            trend={goalReached ? "success" : "neutral"}
-          />
-          <StatCard
-            label="Refeições"
-            value={String(summary.mealsCount)}
-            hint={summary.mealsCount === 1 ? "registro hoje" : "registros hoje"}
-            icon={UtensilsCrossed}
-          />
-          <StatCard
-            label="Meta calórica"
-            value={`${Math.round(goals.dailyCaloriesGoal)} kcal`}
-            hint={`${caloriePercent}% consumido`}
-            icon={TrendingUp}
-          />
-          <StatCard
-            label="Proteína"
-            value={`${Math.round(summary.totalProtein)} g`}
-            hint={`Meta: ${Math.round(goals.dailyProteinGoal)} g`}
-            trend={
-              summary.totalProtein >= goals.dailyProteinGoal
-                ? "success"
-                : "neutral"
-            }
-          />
-        </>
       }
     >
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">

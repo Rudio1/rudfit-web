@@ -224,4 +224,31 @@
   .action-link {
     @apply cursor-pointer;
   }
+
+  .meal-scan-beam {
+    animation: meal-scan-beam 2.6s ease-in-out infinite;
+    top: -30%;
+  }
+
+  .meal-scan-progress {
+    animation: meal-scan-progress 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes meal-scan-beam {
+  from {
+    top: -30%;
+  }
+  to {
+    top: 100%;
+  }
+}
+
+@keyframes meal-scan-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
 }

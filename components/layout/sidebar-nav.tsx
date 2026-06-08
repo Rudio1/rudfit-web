@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { Camera, LogOut } from "lucide-react";
-import { clearSession } from "@/lib/auth/session";
+import { usePathname } from "next/navigation";
+import { Camera } from "lucide-react";
+import { LogoutButton } from "@/components/layout/logout-button";
 import { useProfile } from "@/lib/hooks/use-profile";
 import { isNavActive, NAV_ITEMS } from "@/lib/layout/nav-items";
 import { getInitials } from "@/lib/meals/progress";
@@ -18,15 +18,7 @@ interface SidebarNavProps {
 
 export function SidebarNav({ onNavigate, className }: SidebarNavProps) {
   const pathname = usePathname();
-  const router = useRouter();
   const { profile, displayName, loading } = useProfile();
-
-  function handleLogout() {
-    clearSession();
-    onNavigate?.();
-    router.push("/login");
-    router.refresh();
-  }
 
   const initials = profile?.name
     ? getInitials(profile.name)
@@ -114,14 +106,11 @@ export function SidebarNav({ onNavigate, className }: SidebarNavProps) {
           </div>
         )}
 
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="action-link mt-1 flex min-h-9 w-full items-center gap-3 rounded-lg px-3 text-sm text-muted-foreground transition-colors hover:bg-sidebar-accent/70 hover:text-foreground"
-        >
-          <LogOut className="size-[18px] shrink-0" aria-hidden />
-          Sair
-        </button>
+        <LogoutButton
+          variant="sidebar"
+          className="mt-3"
+          onLoggedOut={onNavigate}
+        />
       </div>
     </div>
   );

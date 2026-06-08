@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { AppMobileHeader } from "@/components/layout/app-mobile-header";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 
 interface AppShellProps {
@@ -10,6 +11,7 @@ export function AppShell({ children }: AppShellProps) {
     <div className="min-h-dvh bg-background">
       <AppSidebar />
       <div className="flex min-h-dvh flex-col lg:pl-[var(--sidebar-width)]">
+        <AppMobileHeader />
         <main className="flex-1 pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
           <div className="page-container">{children}</div>
         </main>

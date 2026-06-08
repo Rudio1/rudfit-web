@@ -5,11 +5,11 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 export function ProfilePageSkeleton() {
   return (
     <PageScaffold title="Perfil" subtitle="Carregando seus dados...">
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <Skeleton key={index} className="h-24 rounded-xl" />
-        ))}
+      <div className="grid gap-6 xl:grid-cols-2">
+        <Skeleton className="h-80 rounded-xl" />
+        <Skeleton className="h-80 rounded-xl" />
       </div>
+      <Skeleton className="h-48 rounded-xl" />
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         <Card>
           <CardHeader className="border-b border-border pb-4">

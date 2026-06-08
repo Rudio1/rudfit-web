@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Camera, Loader2 } from "lucide-react";
+import { Camera } from "lucide-react";
 import { toast } from "sonner";
 import {
   analyzePhoto,
@@ -16,6 +16,7 @@ import { getMealTypeLabel } from "@/lib/meals/constants";
 import type { DetectedFood } from "@/lib/types/meals";
 import type { MealType } from "@/lib/types/meals";
 import { MealConfirmPanel } from "@/components/meals/meal-confirm-panel";
+import { MealPhotoScanOverlay } from "@/components/scanner/meal-photo-scan-overlay";
 import { MealTypeImage } from "@/components/meals/meal-type-image";
 import { MealTypePicker } from "@/components/meals/meal-type-picker";
 import { PageScaffold } from "@/components/layout/page-scaffold";
@@ -234,15 +235,11 @@ export function AddMealFlow() {
         </Card>
       ) : null}
 
-      {step === "analyzing" ? (
-        <Card className="shadow-xs">
-          <CardContent className="flex flex-col items-center gap-4 py-16 text-center">
-            <Loader2 className="size-10 animate-spin text-primary" />
-            <p className="text-sm text-muted-foreground">
-              {statusMessage ?? "Processando imagem..."}
-            </p>
-          </CardContent>
-        </Card>
+      {step === "analyzing" && previewUrl ? (
+        <MealPhotoScanOverlay
+          imageUrl={previewUrl}
+          message={statusMessage ?? "Analisando foto…"}
+        />
       ) : null}
 
       {step === "confirm" && mealType ? (
