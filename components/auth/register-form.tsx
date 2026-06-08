@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { register } from "@/lib/api/auth";
 import { ApiError } from "@/lib/api/errors";
 import { setSession } from "@/lib/auth/session";
+import { savePendingInvitePath } from "@/lib/friendships/pending-invite";
 import { ActionBar } from "@/components/ui/action-bar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,8 +20,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+function getSafeNextPath(value: string | null): string | null {
+  if (!value || !value.startsWith("/") || value.startsWith("//")) return null;
+  return value;
+}
+
 export function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextPath = getSafeNextPath(searchParams.get("next"));
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -41,6 +49,7 @@ export function RegisterForm() {
       });
       setSession(response);
       toast.success("Conta criada com sucesso.");
+      if (nextPath) savePendingInvitePath(nextPath);
       router.push("/onboarding");
       router.refresh();
     } catch (error) {
@@ -120,7 +129,10 @@ export function RegisterForm() {
           </ActionBar>
           <p className="text-center text-sm text-muted-foreground">
             Já tem conta?{" "}
-            <Link href="/login" className="action-link font-medium text-primary hover:underline">
+            <Link
+              href={nextPath ? `/login?next=${encodeURIComponent(nextPath)}` : "/login"}
+              className="action-link font-medium text-primary hover:underline"
+            >
               Entrar
             </Link>
           </p>

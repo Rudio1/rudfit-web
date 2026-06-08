@@ -5,6 +5,10 @@ import { AUTH_COOKIE, parseSession } from "@/lib/auth/session-shared";
 const AUTH_ROUTES = ["/login", "/register"];
 const PUBLIC_PREFIXES = ["/legal"];
 
+function isInvitePath(pathname: string): boolean {
+  return pathname === "/invite" || pathname.startsWith("/invite/");
+}
+
 function isPublicPath(pathname: string): boolean {
   return PUBLIC_PREFIXES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
@@ -32,11 +36,16 @@ export function middleware(request: NextRequest) {
     if (isAuthRoute(pathname)) {
       return NextResponse.next();
     }
+    if (isInvitePath(pathname)) {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("next", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (session.isFirstAccess) {
-    if (isOnboardingPath(pathname)) {
+    if (isOnboardingPath(pathname) || isInvitePath(pathname)) {
       return NextResponse.next();
     }
     if (isAuthRoute(pathname)) {

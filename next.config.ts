@@ -1,15 +1,12 @@
 import type { NextConfig } from "next";
 
-const apiProxyTarget =
-  process.env.API_PROXY_TARGET ??
-  "https://lab-rudfit-ai.e5zpsi.easypanel.host/api";
-
 const nextConfig: NextConfig = {
-  async rewrites() {
+  async redirects() {
     return [
       {
-        source: "/api-proxy/:path*",
-        destination: `${apiProxyTarget.replace(/\/$/, "")}/:path*`,
+        source: "/:token([0-9a-f]{32})",
+        destination: "/invite/:token",
+        permanent: false,
       },
     ];
   },

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { calculateDailyGoals } from "@/lib/api/onboarding";
 import { ApiError } from "@/lib/api/errors";
 import { markFirstAccessComplete } from "@/lib/auth/session";
+import { getPendingInviteRedirect } from "@/lib/friendships/pending-invite";
 import type { DailyGoalsResponse } from "@/lib/types/onboarding";
 import { OnboardingGoalsResult } from "@/components/onboarding/onboarding-goals-result";
 import { OnboardingSidePanel } from "@/components/onboarding/onboarding-side-panel";
@@ -40,7 +41,8 @@ export function GoalsResultView() {
 
   function handleStart() {
     markFirstAccessComplete();
-    router.push("/");
+    const pendingInvite = getPendingInviteRedirect();
+    router.push(pendingInvite ?? "/");
     router.refresh();
   }
 
