@@ -1,5 +1,6 @@
 import { PencilLine, Trash2 } from "lucide-react";
 import type { EditableMealItem } from "@/lib/meals/meal-log-utils";
+import { messageService } from "@/lib/services/message-service";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +21,14 @@ export function MealLogItemEditor({
   onRemove,
   canRemove,
 }: MealLogItemEditorProps) {
+  async function handleRemove() {
+    const confirmed = await messageService.confirmRemove({
+      itemLabel: item.name.trim() || "este item",
+    });
+    if (!confirmed) return;
+    onRemove(index);
+  }
+
   return (
     <article className="overflow-hidden rounded-xl border border-primary/20 bg-card shadow-xs ring-1 ring-primary/5">
       <header className="flex items-center justify-between gap-3 border-b border-border bg-muted/30 px-4 py-2.5">
@@ -78,7 +87,7 @@ export function MealLogItemEditor({
             variant="ghost"
             size="sm"
             className={cn("h-8 text-muted-foreground hover:text-destructive")}
-            onClick={() => onRemove(index)}
+            onClick={handleRemove}
           >
             <Trash2 className="size-3.5" />
             Remover item

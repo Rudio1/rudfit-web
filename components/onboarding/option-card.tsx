@@ -152,7 +152,7 @@ export function MetricField({
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="flex h-11 w-full rounded-lg border border-input bg-background px-3 pr-14 text-base tabular-nums shadow-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30"
+          className="flex h-11 w-full rounded-lg border border-border bg-background px-3 pr-14 text-base tabular-nums shadow-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30"
         />
         <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm font-medium text-muted-foreground">
           {suffix}

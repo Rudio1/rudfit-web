@@ -1,6 +1,7 @@
 import { PencilLine, Trash2 } from "lucide-react";
 import type { DetectedFood } from "@/lib/types/meals";
 import { formatMacro } from "@/lib/meals/macros";
+import { messageService } from "@/lib/services/message-service";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +34,14 @@ export function FoodItemEditor({
       next.fatGrams = null;
     }
     onChange(index, next);
+  }
+
+  async function handleRemove() {
+    const confirmed = await messageService.confirmRemove({
+      itemLabel: food.name.trim() || "este item",
+    });
+    if (!confirmed) return;
+    onRemove(index);
   }
 
   return (
@@ -149,7 +158,7 @@ export function FoodItemEditor({
             variant="ghost"
             size="sm"
             className="h-8 text-muted-foreground hover:text-destructive"
-            onClick={() => onRemove(index)}
+            onClick={handleRemove}
           >
             <Trash2 className="size-3.5" />
             Remover item

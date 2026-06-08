@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { clearSession } from "@/lib/auth/session";
+import { messageService } from "@/lib/services/message-service";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 
@@ -21,7 +22,10 @@ export function LogoutButton({
 }: LogoutButtonProps) {
   const router = useRouter();
 
-  function handleLogout() {
+  async function handleLogout() {
+    const confirmed = await messageService.confirmLogout();
+    if (!confirmed) return;
+
     clearSession();
     onLoggedOut?.();
     router.push("/login");

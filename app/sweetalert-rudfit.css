@@ -1,0 +1,194 @@
+@import "sweetalert2/dist/sweetalert2.min.css";
+
+.rudfit-swal-container {
+  z-index: 9999;
+}
+
+.rudfit-swal-backdrop {
+  background: rgb(15 23 42 / 0.3);
+  backdrop-filter: blur(2px);
+}
+
+.rudfit-swal-popup.swal2-popup {
+  width: min(calc(100vw - 1.5rem), 17.5rem) !important;
+  max-width: 17.5rem;
+  padding: 0.875rem 0.875rem 0;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 2px);
+  background: var(--card);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-md);
+  --swal2-actions-justify-content: flex-end;
+  --swal2-actions-width: 100%;
+  --swal2-actions-margin: 0.75rem 0 0;
+  --swal2-actions-padding: 0;
+  --swal2-actions-background: transparent;
+}
+
+.rudfit-swal-title {
+  margin: 0 0 0.25rem;
+  padding: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.rudfit-swal-text {
+  margin: 0;
+  padding: 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.rudfit-swal-icon.swal2-icon {
+  width: 2.625rem;
+  height: 2.625rem;
+  margin: 0.125rem auto 0.5rem;
+  border-width: 2px;
+}
+
+.rudfit-swal-icon .swal2-icon-content {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.rudfit-swal-icon.swal2-question {
+  border-color: color-mix(in oklch, var(--primary) 35%, transparent);
+  color: var(--primary);
+}
+
+.rudfit-swal-icon.swal2-warning {
+  border-color: color-mix(in oklch, var(--warning) 40%, transparent);
+  color: var(--warning);
+}
+
+.rudfit-swal-icon.swal2-error {
+  border-color: color-mix(in oklch, var(--destructive) 35%, transparent);
+  color: var(--destructive);
+}
+
+.rudfit-swal-icon.swal2-success {
+  border-color: color-mix(in oklch, var(--success) 35%, transparent);
+  color: var(--success);
+}
+
+.rudfit-swal-icon.swal2-info {
+  border-color: color-mix(in oklch, var(--ai) 35%, transparent);
+  color: var(--ai);
+}
+
+div:where(.swal2-container.rudfit-swal-container) div:where(.swal2-actions) {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 1.5rem !important;
+  width: 100% !important;
+  margin: 0.75rem -0.875rem 0 !important;
+  padding: 0.625rem 0.875rem !important;
+  border-top: 1px solid var(--border);
+  background: color-mix(in oklch, var(--muted) 45%, transparent);
+}
+
+div:where(.swal2-container.rudfit-swal-container)
+  div:where(.swal2-actions)
+  button:where(.swal2-confirm, .swal2-deny, .swal2-cancel) {
+  margin-block: 0 !important;
+  padding: 0 0.75rem !important;
+  border: 1px solid transparent;
+  box-shadow: none !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+}
+
+.rudfit-swal-actions .rudfit-swal-btn {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.rudfit-swal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  min-height: 2rem;
+  min-width: 4.5rem;
+  padding: 0 0.75rem;
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius) * 0.8);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.rudfit-swal-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--ring) 30%, transparent);
+}
+
+.rudfit-swal-btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 9999px;
+  padding-inline: 0.875rem;
+}
+
+.rudfit-swal-btn-primary:hover {
+  background: color-mix(in oklch, var(--primary) 88%, var(--foreground));
+}
+
+.rudfit-swal-btn-destructive {
+  border-color: color-mix(in oklch, var(--destructive) 18%, transparent);
+  background: color-mix(in oklch, var(--destructive) 10%, transparent);
+  color: var(--destructive);
+}
+
+.rudfit-swal-btn-destructive:hover {
+  border-color: color-mix(in oklch, var(--destructive) 28%, transparent);
+  background: color-mix(in oklch, var(--destructive) 18%, transparent);
+}
+
+.rudfit-swal-btn-destructive:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--destructive) 25%, transparent);
+}
+
+.rudfit-swal-btn-warning {
+  border-color: color-mix(in oklch, var(--warning) 25%, transparent);
+  background: color-mix(in oklch, var(--warning) 12%, transparent);
+  color: color-mix(in oklch, var(--warning) 85%, var(--foreground));
+}
+
+.rudfit-swal-btn-warning:hover {
+  background: color-mix(in oklch, var(--warning) 20%, transparent);
+}
+
+.rudfit-swal-btn-cancel {
+  border-color: var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+}
+
+.rudfit-swal-btn-cancel:hover {
+  border-color: color-mix(in oklch, var(--border) 70%, var(--foreground));
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@media (max-width: 360px) {
+  .rudfit-swal-popup.swal2-popup {
+    width: min(calc(100vw - 1rem), 17.5rem) !important;
+  }
+}
