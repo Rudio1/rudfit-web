@@ -1,0 +1,1 @@
+export const FREE_SCANNER_LIFETIME_LIMIT = 15;

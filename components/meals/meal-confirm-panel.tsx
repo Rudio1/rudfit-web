@@ -117,7 +117,7 @@ export function MealConfirmPanel({
           <div className="space-y-3">
             {foods.map((food, index) => (
               <FoodItemEditor
-                key={`${food.name}-${index}`}
+                key={index}
                 food={food}
                 index={index}
                 onChange={onUpdateFood}

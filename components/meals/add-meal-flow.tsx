@@ -20,6 +20,8 @@ import { MealPhotoScanOverlay } from "@/components/scanner/meal-photo-scan-overl
 import { MealTypeImage } from "@/components/meals/meal-type-image";
 import { MealTypePicker } from "@/components/meals/meal-type-picker";
 import { PageScaffold } from "@/components/layout/page-scaffold";
+import { FreeScannerUsesHint } from "@/components/subscription/free-scanner-uses-hint";
+import { useProfile } from "@/lib/hooks/use-profile";
 import { ActionBar } from "@/components/ui/action-bar";
 import { buttonVariants } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
@@ -29,6 +31,7 @@ type Step = "type" | "photo" | "analyzing" | "confirm";
 
 export function AddMealFlow() {
   const router = useRouter();
+  const { subscription, hasPremium, refresh: refreshProfile } = useProfile();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState<Step>("type");
   const [mealType, setMealType] = useState<MealType | null>(null);
@@ -59,6 +62,7 @@ export function AddMealFlow() {
 
     try {
       const analyzed = await analyzePhoto(file);
+      void refreshProfile();
       if (!analyzed.foods.length) {
         throw new Error(
           "Não conseguimos identificar alimentos nessa foto. Tente outra com melhor iluminação.",
@@ -183,7 +187,14 @@ export function AddMealFlow() {
     >
 
       {step === "type" ? (
-        <MealTypePicker value={mealType} onChange={handleSelectMealType} />
+        <div className="space-y-4">
+          {subscription && !hasPremium ? (
+            <FreeScannerUsesHint
+              remaining={subscription.freeScannerUsesRemaining ?? 0}
+            />
+          ) : null}
+          <MealTypePicker value={mealType} onChange={handleSelectMealType} />
+        </div>
       ) : null}
 
       {step === "photo" ? (
@@ -213,6 +224,12 @@ export function AddMealFlow() {
               <p className="mt-1 text-sm text-muted-foreground">
                 JPEG, PNG ou WebP · até 6 MB
               </p>
+              {subscription && !hasPremium ? (
+                <FreeScannerUsesHint
+                  remaining={subscription.freeScannerUsesRemaining ?? 0}
+                  className="mt-3"
+                />
+              ) : null}
             </div>
             <ActionBar variant="single">
               <Button
