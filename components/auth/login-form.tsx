@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { login } from "@/lib/api/auth";
@@ -40,10 +39,15 @@ export function LoginForm() {
     setLoading(true);
     try {
       const response = await login({ email: email.trim(), password });
-      setSession(response);
+      setSession({
+        ...response,
+        isAdmin: Boolean(response.isAdmin),
+      });
       toast.success("Login realizado com sucesso.");
 
-      if (response.isFirstAccess) {
+      if (response.isAdmin) {
+        router.push("/admin");
+      } else if (response.isFirstAccess) {
         if (nextPath) savePendingInvitePath(nextPath);
         router.push("/onboarding");
       } else {
@@ -102,15 +106,6 @@ export function LoginForm() {
               {loading ? "Entrando..." : "Entrar"}
             </Button>
           </ActionBar>
-          <p className="text-center text-sm text-muted-foreground">
-            Não tem conta?{" "}
-            <Link
-              href={nextPath ? `/register?next=${encodeURIComponent(nextPath)}` : "/register"}
-              className="action-link font-medium text-primary hover:underline"
-            >
-              Criar conta
-            </Link>
-          </p>
         </form>
       </CardContent>
     </Card>

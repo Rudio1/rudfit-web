@@ -2,11 +2,19 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { AUTH_COOKIE, parseSession } from "@/lib/auth/session-shared";
 
-const AUTH_ROUTES = ["/login", "/register"];
+const AUTH_ROUTES = ["/login"];
 const PUBLIC_PREFIXES = ["/legal"];
 
 function isInvitePath(pathname: string): boolean {
   return pathname === "/invite" || pathname.startsWith("/invite/");
+}
+
+function isRegisterPath(pathname: string): boolean {
+  return pathname === "/register" || pathname.startsWith("/register/");
+}
+
+function isAdminPath(pathname: string): boolean {
+  return pathname === "/admin" || pathname.startsWith("/admin/");
 }
 
 function isPublicPath(pathname: string): boolean {
@@ -28,7 +36,7 @@ export function middleware(request: NextRequest) {
   const raw = request.cookies.get(AUTH_COOKIE)?.value;
   const session = parseSession(raw ? decodeURIComponent(raw) : null);
 
-  if (isPublicPath(pathname)) {
+  if (isPublicPath(pathname) || isRegisterPath(pathname)) {
     return NextResponse.next();
   }
 
@@ -42,6 +50,20 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
     return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  if (session.isAdmin) {
+    if (isAuthRoute(pathname) || isOnboardingPath(pathname) || !isAdminPath(pathname)) {
+      if (isAdminPath(pathname)) {
+        return NextResponse.next();
+      }
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+    return NextResponse.next();
+  }
+
+  if (isAdminPath(pathname)) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   if (session.isFirstAccess) {

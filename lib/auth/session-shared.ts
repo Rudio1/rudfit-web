@@ -14,7 +14,11 @@ export function parseSession(raw: string | null | undefined): AuthSession | null
       return null;
     }
 
-    return session;
+    return {
+      ...session,
+      isAdmin: Boolean(session.isAdmin),
+      isFirstAccess: Boolean(session.isFirstAccess),
+    };
   } catch {
     return null;
   }

@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
         subtitle="Informações usadas para criar e manter seu acesso."
       >
         <LegalBullet
-          title="Cadastro e login"
+          title="Login"
           description="Podemos tratar nome, username, e-mail e credenciais de acesso para autenticar sua conta e manter sua sessão ativa."
         />
         <LegalBullet

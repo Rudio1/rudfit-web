@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Camera } from "lucide-react";
 import { LogoutButton } from "@/components/layout/logout-button";
-import { SubscriptionStatusBadge } from "@/components/layout/subscription-status-badge";
 import { useProfile } from "@/lib/hooks/use-profile";
 import { isNavActive, NAV_ITEMS } from "@/lib/layout/nav-items";
 import { getInitials } from "@/lib/meals/progress";
@@ -19,7 +18,7 @@ interface SidebarNavProps {
 
 export function SidebarNav({ onNavigate, className }: SidebarNavProps) {
   const pathname = usePathname();
-  const { profile, subscription, displayName, loading } = useProfile();
+  const { profile, displayName, loading } = useProfile();
 
   const initials = profile?.name
     ? getInitials(profile.name)
@@ -93,16 +92,9 @@ export function SidebarNav({ onNavigate, className }: SidebarNavProps) {
               </div>
             )}
             <div className="min-w-0 flex-1">
-              <div className="flex min-w-0 items-center gap-1.5">
-                <p className="truncate text-sm font-medium text-sidebar-foreground">
-                  {displayName}
-                </p>
-                {subscription ? (
-                  <SubscriptionStatusBadge
-                    hasPremium={subscription.hasPremium}
-                  />
-                ) : null}
-              </div>
+              <p className="truncate text-sm font-medium text-sidebar-foreground">
+                {displayName}
+              </p>
               {profile?.username ? (
                 <p className="truncate text-xs text-muted-foreground">
                   @{profile.username}
